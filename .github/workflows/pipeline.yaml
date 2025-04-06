@@ -27,5 +27,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/dreamsofcode-io/zenstats:latest
-            ghcr.io/dreamsofcode-io/zenstats:${{ github.sha }}
+            ghcr.io/nani19dev/imolage-backend:latest
+            ghcr.io/nani19dev/imolage-backend:${{ github.sha }}
