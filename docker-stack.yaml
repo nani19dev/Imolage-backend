@@ -1,0 +1,55 @@
+services:
+  django-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 2 # Scale for production
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.django.rule=Host(`backendvps.eu`)" # Replace with your production domain
+        - "traefik.http.services.django.loadbalancer.server.port=8000"
+        - "traefik.http.routers.django.entrypoints=web"
+        - "traefik.http.routers.django.tls.certresolver=myresolver" # Enable HTTPS
+    environment:
+      - DOMAIN=backendvps.eu # Replace with your production domain
+      #- SECRET_KEY_VALUE=${SECRET_KEY_VALUE}
+      #- DB_HOST=${DB_HOST} 
+      #- DB_NAME=${DB_NAME} 
+      #- DB_USER=${DB_USER} 
+      #- DB_PORT=${DB_PORT} 
+      #- DB_PWD=${DB_PWD} 
+    networks:
+      - web
+
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=false" # Disable insecure API in production
+      - "--providers.docker=true"
+      - "--providers.docker.swarmMode=true" # Enable Swarm mode
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443" # Enable HTTPS
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # Enable Let's Encrypt
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443" # Enable HTTPS
+    networks:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+    deploy:
+      placement:
+        constraints: [node.role == manager] # Run on manager node
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.backendvps.eu`)" # Replace with your Traefik dashboard domain
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.entrypoints=websecure" # Use HTTPS for dashboard
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+
+networks:
+  web:
+    driver: overlay # Use overlay network for Swarm
