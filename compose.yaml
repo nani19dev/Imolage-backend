@@ -1,7 +1,7 @@
 services:
 
   api:
-    image: ghcr.io/nani19dev/backend:latest
+    image: ghcr.io/nani19dev/imolage-backend:latest
     deploy:
       update_config:
         order: start-first
