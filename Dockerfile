@@ -1,5 +1,5 @@
 # Stage 1: Base build stage
-FROM python:3.12-alpine AS builder
+FROM python:3.13-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -19,7 +19,7 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Stage 2: Production stage
-FROM python:3.12-alpine
+FROM python:3.13-alpine
 
 # Install shadow to get useradd
 RUN apk update && apk add shadow
@@ -29,7 +29,7 @@ RUN useradd -m -r appuser && \
    chown -R appuser /app
  
 # Copy the Python dependencies from the builder stage
-COPY --from=builder /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
 # Set the working directory
@@ -52,7 +52,7 @@ COPY . /app/
 #RUN python manage.py makemigrations && python manage.py migrate
 
 # Expose the port your Django app runs on
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the Django development server
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "backend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "3", "backend.wsgi:application"]
