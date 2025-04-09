@@ -2,8 +2,6 @@ services:
 
   api:
     image: ghcr.io/nani19dev/imolage-backend:latest
-    deploy:
-      update_config:
-        order: start-first
+    restart: always
     ports:
       - "80:8080"
