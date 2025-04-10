@@ -5,3 +5,26 @@ services:
     restart: always
     ports:
       - "80:8000"
+    secrets:
+      - db_user 
+      - db_password
+      - django_secret_key
+    environment:
+      DB_ENGINE: 'django.db.backends.postgresql_psycopg2'
+      DB_HOST: 'aws-0-eu-central-1.pooler.supabase.com'
+      DB_NAME: 'postgres'
+      DB_USER: /run/secrets/db_user
+      DB_PORT: '6543'
+      DB_PWD: /run/secrets/db_password
+      SECRET_KEY_VALUE: /run/secrets/django_secret_key
+      DOMAIN: 'backendvps.eu'
+      DEBUG: 'FALSE'
+
+secrets:
+  db_user:
+    file: .secrets/db.user
+  db_password:
+    file: .secrets/db.password 
+  django_secret_key:
+    file: .secrets/secret.key
+  
