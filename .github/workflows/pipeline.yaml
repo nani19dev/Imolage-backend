@@ -23,19 +23,19 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
-        env:
-          DOMAIN: ${{ vars.DOMAIN }}
-          DB_ENGIN: ${{ vars.DB_ENGIN }}
-          DB_HOST: ${{ vars.DB_HOST }}
-          DB_NAME: ${{ vars.DB_NAME }}
-          DB_USER: ${{ vars.DB_USER }}
-          DB_PORT: ${{ vars.DB_PORT }}
-          DB_PWD: ${{ vars.DB_PWD }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY_VALUE }}
         with:
           context: .
           push: true
           tags: |
             ghcr.io/nani19dev/imolage-backend:latest 
             ghcr.io/nani19dev/imolage-backend:${{ github.sha }}
+          build-args: |
+            DOMAIN: ${{ vars.DOMAIN }}
+            DB_ENGIN: ${{ vars.DB_ENGIN }}
+            DB_HOST: ${{ vars.DB_HOST }}
+            DB_NAME: ${{ vars.DB_NAME }}
+            DB_USER: ${{ vars.DB_USER }}
+            DB_PORT: ${{ vars.DB_PORT }}
+            DB_PWD: ${{ vars.DB_PWD }}
+            SECRET_KEY: ${{ secrets.SECRET_KEY_VALUE }}
         
