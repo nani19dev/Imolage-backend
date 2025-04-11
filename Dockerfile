@@ -34,6 +34,9 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
 # Set the working directory
 WORKDIR /app
+
+# Copy requirements.txt to the container
+COPY requirements.txt /app/
  
 # Copy application code
 COPY --chown=appuser:appuser . .
