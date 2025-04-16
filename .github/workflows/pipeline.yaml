@@ -25,13 +25,12 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          dockerfile: Dockerfile
           push: true
           tags: |
             ghcr.io/nani19dev/imolage-backend:latest 
             ghcr.io/nani19dev/imolage-backend:${{ github.sha }}
           build-args: |
-            DB_ENGIN: ${{ vars.DB_ENGINE }}
+            DB_ENGINE: ${{ vars.DB_ENGINE }}
             DB_HOST: ${{ vars.DB_HOST }}
             DB_NAME: ${{ vars.DB_NAME }}
             DB_USER: ${{ vars.DB_USER }}
