@@ -20,6 +20,16 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+def get_secret(secret_name, default=None):
+    """Reads a secret from /run/secrets or environment variables."""
+    try:
+        with open(f'/run/secrets/{secret_name}', 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return os.environ.get(secret_name, default)
+    
+SECRET_KEY = get_secret('django_secret_key')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -115,9 +125,9 @@ DATABASES = {
         'ENGINE':os.getenv('DB_ENGINE'),
         'HOST': os.getenv('DB_HOST'), 
         'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
+        'USER': get_secret('db_user'),# os.getenv('DB_USER'),
         'PORT': os.getenv('DB_PORT'),
-        'PASSWORD':os.getenv('DB_PWD'),    
+        'PASSWORD': get_secret('db_password'), #os.getenv('DB_PWD'),    
     }
 }
 
