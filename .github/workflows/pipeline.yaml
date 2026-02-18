@@ -53,7 +53,7 @@ jobs:
         with:
           name: imolage
           file: docker-stack.yml
-          host: deploy@backendvps.eu
+          host: backendvps.eu
           user: deploy
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
           env_file: .env
