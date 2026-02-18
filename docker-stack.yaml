@@ -1,10 +1,8 @@
 services:
   django-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/nani19dev/imolage-backend:${GIT_COMMIT_HASH:-latest}
     deploy:
-      replicas: 2 # Scale for production
+      replicas: 1 # Scale for production
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.django.rule=Host(`backendvps.eu`)" # Replace with your production domain
