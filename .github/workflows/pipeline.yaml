@@ -49,11 +49,11 @@ jobs:
         run: echo "GIT_COMMIT_HASH=${{ github.sha }}" > .env
       
       - name: Deploy Docker Stack
-        uses: docker-deploy-action@v1
+        uses: cssnr/stack-deploy-action@v1
         with:
-          stack: django-stack
+          name: imolage
           file: docker-stack.yml
-          host: ssh://deploy@backendvps.eu
+          host: deploy@backendvps.eu
           user: deploy
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_VALUE }}
-          env-file: .env
+          ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          env_file: ./env
