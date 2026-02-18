@@ -52,7 +52,7 @@ jobs:
         uses: cssnr/stack-deploy-action@v1
         with:
           name: imolage
-          file: docker-stack.yaml
+          file: compose.yaml
           host: backendvps.eu
           user: deploy
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
