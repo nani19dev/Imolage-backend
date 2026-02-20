@@ -20,11 +20,11 @@ services:
       DOMAIN: 'backendvps.eu'
       DEBUG: 'FALSE'
 
-secrets:
-  db_user:
-    file: .secrets/db.user
-  db_password:
-    file: .secrets/db.password 
-  django_secret_key:
-    file: .secrets/secret.key
+#secrets:
+#  db_user:
+#    file: .secrets/db.user
+#  db_password:
+#    file: .secrets/db.password 
+#  django_secret_key:
+#    file: .secrets/secret.key
   

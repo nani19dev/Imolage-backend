@@ -1,6 +1,8 @@
 services:
   django-app:
-    image: ghcr.io/nani19dev/imolage-backend:${GIT_COMMIT_HASH:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
     deploy:
       replicas: 1 # Scale for production
       labels:
