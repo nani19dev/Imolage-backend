@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     deploy:
-      replicas: 1 # Scale for production
+      replicas: 3 # Scale for production
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.django.rule=Host(`backendvps.eu`)" # Replace with your production domain
