@@ -56,7 +56,7 @@ COPY . /app/
 #RUN python manage.py migrate
 
 # Expose the port your Django app runs on
-EXPOSE 3000
+EXPOSE 8000
 
 # Run the Django development server
-CMD ["gunicorn", "--bind", "0.0.0.0:3000", "--workers", "3", "backend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "backend.wsgi:application"]
