@@ -47,7 +47,7 @@ COPY requirements.txt /app/
 # Copy application code (owned by appuser, not root)
 COPY --chown=appuser:appuser . .
 
-RUN chmod +x entrypoint.sh
+#RUN chmod +x entrypoint.sh
   
 # Switch to non-root user
 USER appuser
@@ -61,6 +61,6 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8000/api/health/ || exit 1
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
 # Run the Django development server
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "backend.wsgi:application"]
