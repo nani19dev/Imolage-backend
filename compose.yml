@@ -2,6 +2,7 @@ services:
 
   api:
     image: ghcr.io/nani19dev/imolage-backend:latest
+    pull_policy: always
     restart: always
     networks:
       - dokploy-network
