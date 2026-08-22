@@ -61,6 +61,6 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8000/api/health/ || exit 1
 
-RUN python manage.py migrate --noinput
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
 # Run the Django development server
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "backend.wsgi:application"]
