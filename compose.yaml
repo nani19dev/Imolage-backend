@@ -3,17 +3,10 @@ services:
   api:
     image: ghcr.io/nani19dev/imolage-backend:latest
     restart: always
-    environment:
-      SECRET_KEY_VALUE: ${SECRET_KEY_VALUE}
-      DB_ENGINE: ${DB_ENGINE}
-      DB_HOST: ${DB_HOST}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PORT: ${DB_PORT}
-      DB_PWD: ${DB_PWD}
-      DEBUG: 'False'
     networks:
       - dokploy-network
+    ports:
+      - "8000:8000"
 
 networks:
   dokploy-network:
