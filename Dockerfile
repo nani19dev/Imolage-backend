@@ -35,7 +35,6 @@ ENV PYTHONUNBUFFERED=1
 RUN apk update && apk add shadow libpq curl
  
 RUN useradd -m -r appuser && \
-   mkdir /app && \
    chown -R appuser /app
 
 # Copy the Python dependencies from the builder stage
